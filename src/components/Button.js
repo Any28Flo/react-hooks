@@ -2,9 +2,12 @@ import React, {useState} from "react";
 
 const Button = () =>{
     const [isGreen, setIsGreen] = useState(true);
+    const changeColor = () =>{
+        setIsGreen(!isGreen);
+    };
     return(
         <div>
-            <button style={{backgroundColor: isGreen ? 'green' : 'blue'}}>Hola</button>
+            <button onClick={changeColor} style={{backgroundColor: isGreen ? 'green' : 'blue'}}>Hola</button>
         </div>
     )
 };
