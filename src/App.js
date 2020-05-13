@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Button from "./components/Button";
 import Counter from "./components/Counter";
+import NewMovie from "./components/NewMovie";
 import CounterComponent from "./components/CounterComponent";
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Button/>
       {/*<Counter/>*/}
       <CounterComponent/>
+      <NewMovie/>
     </div>
   );
 }
