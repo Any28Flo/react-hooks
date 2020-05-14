@@ -1,10 +1,12 @@
-import React from "react";
+import React , {useState} from "react";
 
-const MovieForm = () =>{
+const MovieForm = ({onSubmit}) =>{
+    const [text, setText]  = useState('');
+
     return(
 
-            <form data-testid="movie-form">
-                <label>Movie name:</label>
+            <form data-testid="movie-form" onSubmit={ onSubmit}>
+
                 <input type="text"/>
                 <button>Submit</button>
             </form>
