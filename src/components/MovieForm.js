@@ -4,10 +4,11 @@ const MovieForm = ({onSubmit}) =>{
     const [text, setText]  = useState('');
 
     return(
-
-            <form data-testid="movie-form" onSubmit={ onSubmit}>
-
-                <input type="text"/>
+            <form data-testid="movie-form" onSubmit={ () =>onSubmit({text}) }>
+                <label htmlFor="">
+                    Text
+                    <input type="text" onChange = {e  => setText( e.target.value)}/>
+                </label>
                 <button>Submit</button>
             </form>
 
