@@ -7,16 +7,19 @@ import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import Overdrive from 'react-overdrive'
 //Route path for our images.
-const POSTER_PATH = 'http://image.tmdb.org/t/p/w154';
+export const POSTER_PATH = 'http://image.tmdb.org/t/p/w154';
 
 const MovieFunct  = ({movie}) =>{
     if(!movie) return null;
     return(
         <div>
-            <Link to={`/${movie.id}`} >
+            <Link to={`/${movie.id}`} data-testid="movie-link">
                 <Overdrive id={movie.id}>
 
-                    <Poster  src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title}/>
+                    <Poster
+                        data-testid="movie-img"
+                        src={`${POSTER_PATH}${movie.poster_path}`}
+                        alt={movie.title}/>
                 </Overdrive>
             </Link>
 
