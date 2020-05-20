@@ -1,52 +1,41 @@
-import React, {Component} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {Poster} from './MovieFunc'
+import {Poster} from "./MovieFunct";
 import Overdrive from 'react-overdrive'
-
 const POSTER_PATH = 'http://image.tmdb.org/t/p/w154';
 const BACKDROP_PATH = 'http://image.tmdb.org/t/p/w1280'
-
-class MovielDetail  extends Component{
-
-    state={
-        movieDetail : {}
-    }
-
-    async componentDidMount(){
-        try{
-            const res = await  fetch(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}?api_key=752c40ead27873575d61b3395b9911d8&language=en-US`)
-            const movies = await res.json();
-            console.log(movies)
-            this.setState({
-                movieDetail : movies
-            })
-
-        }catch(e){
-            console.log(e);
+const MovieDetail = props =>{
+    const [movieDetail, setMovieDetail] = useState({})
+    useEffect(() =>{
+       async function fetchData () {
+            const res = await fetch(`https://api.themoviedb.org/3/movie/${props.match.params.id}?api_key=752c40ead27873575d61b3395b9911d8&language=en-US`);
+            res
+                .json()
+                .then( res=> setMovieDetail(res))
+                .catch( e => console.log(e))
         }
-    }
-    render(){
-        const {movieDetail} = this.state;
-        return(
-            <MovieWrapper backdrop = {`${BACKDROP_PATH}${movieDetail.backdrop_path}`}>
-                <MovieInfo>
-                    <Overdrive id={movieDetail.id}>
+        fetchData()
+    }, [])
 
-                        <Poster  src={`${POSTER_PATH}${movieDetail.poster_path}`} alt={movieDetail.title}/>
-                    </Overdrive>
+    if(!movieDetail.id) return null
+    return(
+        <MovieWrapper backdrop = {`${BACKDROP_PATH}${movieDetail.backdrop_path}`}>
+            <MovieInfo>
+                <Overdrive id={movieDetail.id}>
 
-                    <div>
-                        <h1>{movieDetail.title}</h1>
-                        <h3>{movieDetail.release_date}</h3>
-                        <p>{movieDetail.overview}</p>
-                    </div>
-                </MovieInfo>
-            </MovieWrapper>
-        )
-    }
+                    <Poster  src={`${POSTER_PATH}${movieDetail.poster_path}`} alt={movieDetail.title}/>
+                </Overdrive>
+
+                <div>
+                    <h1 data-testid="movie-title">{movieDetail.title}</h1>
+                    <h3 data-testid="movie-release_date">{movieDetail.release_date}</h3>
+                    <p data-testid="movie-detail">{movieDetail.overview}</p>
+                </div>
+            </MovieInfo>
+        </MovieWrapper>
+    )
 }
 
-export default MovielDetail
 
 const MovieWrapper = styled.div` 
   position:relative;
@@ -67,3 +56,4 @@ const MovieInfo = styled.div`
     top: -5rem;
   }
 `;
+export default MovieDetail;
